@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: template-core
+
+  cache:
+    cache-names: ${spring.application.name}-cache
+    caffeine:
+      spec: maximumSize=100
+    type: caffeine
+
+  config:
+    import: local.yaml
+
+  datasource:
+    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    # show-sql: true
+
+template:
+  admin:
+    password: ${ADMIN_PASSWORD}
+
+  email:
+    sender: ${EMAIL_SENDER}
+    senderPassword: ${EMAIL_SENDER_PASSWORD}
+
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 86400000
+
+springdoc:
+  swagger-ui:
+    enabled: false
