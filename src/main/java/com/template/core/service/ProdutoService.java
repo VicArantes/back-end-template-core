@@ -4,8 +4,6 @@ import com.template.core.entity.Produto;
 import com.template.core.repository.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ProdutoService {
-    private static final Logger LOG = LoggerFactory.getLogger(ProdutoService.class);
 
     private final ProdutoRepository repository;
 
@@ -30,7 +27,6 @@ public class ProdutoService {
      * @throws EntityNotFoundException se o produto não for encontrado
      */
     public Produto findById(Long id) {
-        LOG.info("TESTANDO LOGGER");
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
     }
 
