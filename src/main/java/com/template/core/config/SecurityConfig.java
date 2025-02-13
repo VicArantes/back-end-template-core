@@ -52,46 +52,24 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/swagger-ui.html/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .anyRequest().access((authenticationSupplier, request) -> {
-                            String tempApiKey = request.getRequest().getHeader("X-Service-Token");
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/swagger-ui.html/**", "/v3/api-docs/**", "/swagger-ui/**")
+                        .permitAll()
+                        .anyRequest()
+                        .access(((authenticationSupplier, request) -> {
+                            String apiKey = request.getRequest().getHeader("X-Service-Token");
 
-                            if (validateAPIKey(tempApiKey)) {
+                            if (validateAPIKey(apiKey)) {
                                 return new AuthorizationDecision(true);
                             }
                             throw new AccessDeniedException("Access Denied");
                         }))
-                .addFilterBefore(new AuthenticationFilter(tokenService, userService), UsernamePasswordAuthenticationFilter.class)
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
+                );
         return http.build();
     }
-
-    /**
-     * Configura o codificador de senhas utilizado para criptografar senhas.
-     *
-     * @return O PasswordEncoder configurado.
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * Configura o gerenciador de autenticação utilizado para autenticar usuários.
-     *
-     * @param http               O objeto HttpSecurity usado para configurar a segurança.
-     * @param passwordEncoder    O codificador de senhas utilizado para criptografar senhas.
-     * @param userDetailsService O serviço de detalhes do usuário utilizado para recuperar detalhes do usuário.
-     * @return O AuthenticationManager configurado.
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, AuthenticationService userDetailsService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        return new ProviderManager(authProvider);
-    }
-
 }
