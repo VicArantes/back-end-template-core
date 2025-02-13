@@ -1,7 +1,6 @@
 package com.template.core.controller;
 
 import com.template.core.dto.PageRequestDTO;
-import com.template.core.entity.Authority;
 import com.template.core.service.AuthorityService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

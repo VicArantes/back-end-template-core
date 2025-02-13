@@ -1,8 +1,6 @@
 package com.template.core.service;
 
 import com.template.core.entity.User;
-import com.template.core.enums.Status;
-import com.template.core.repository.AuthorityRepository;
 import com.template.core.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

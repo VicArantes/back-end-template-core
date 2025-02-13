@@ -1,9 +1,6 @@
 package com.template.core.test;
 
-import com.template.core.entity.Authority;
 import com.template.core.entity.User;
-import com.template.core.enums.Status;
-import com.template.core.repository.AuthorityRepository;
 import com.template.core.repository.UserRepository;
 import com.template.core.service.AuthorityService;
 import com.template.core.service.UserService;

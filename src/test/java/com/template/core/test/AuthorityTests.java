@@ -1,7 +1,5 @@
 package com.template.core.test;
 
-import com.template.core.entity.Authority;
-import com.template.core.repository.AuthorityRepository;
 import com.template.core.service.AuthorityService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;

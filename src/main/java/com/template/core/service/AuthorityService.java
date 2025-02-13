@@ -1,7 +1,5 @@
 package com.template.core.service;
 
-import com.template.core.entity.Authority;
-import com.template.core.repository.AuthorityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -6,36 +6,37 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnTransformer;
-import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Entidade que representa um perfil.
+ * Entidade que representa os dados pessoais de um usuário.
  */
 @AllArgsConstructor
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "authorities")
-public class Authority implements GrantedAuthority {
+@Table(name = "dados_pessoais")
+public class DadosPessoais {
 
     /**
-     * Identificador único do perfil.
+     * Identificador único dos dados pessoais de um usuário.
      */
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
     /**
-     * Authority Name do perfil.
+     * Nome do usuário.
      */
-    @Column(name = "tx_authority_name", unique = true)
+    @Column(name = "tx_nome")
     @ColumnTransformer(write = "UPPER(?)")
     @NotBlank
-    private String authorityName;
+    private String nome;
 
-    @Override
-    public String getAuthority() {
-        return authorityName;
-    }
+    /**
+     * CPF/CNPJ do usuário.
+     */
+    @Column(name = "tx_cpf_cnpj", unique = true)
+    @NotBlank
+    private String cpfCnpj;
 
 }
