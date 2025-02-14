@@ -27,7 +27,7 @@ public class UserController {
      * @param id O ID do user a ser encontrado.
      * @return O user correspondente ao ID fornecido.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

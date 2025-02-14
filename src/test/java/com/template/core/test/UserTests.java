@@ -2,7 +2,7 @@ package com.template.core.test;
 
 import com.template.core.entity.User;
 import com.template.core.repository.UserRepository;
-import com.template.core.service.AuthorityService;
+import com.template.core.service.RoleService;
 import com.template.core.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -33,16 +33,16 @@ class UserTests {
     }
 
     private UserService service;
-    private AuthorityService authorityService;
+    private RoleService roleService;
 
     @BeforeEach
     void setup() {
         service = new UserService(repository, authorityRepository);
-        authorityService = new AuthorityService(authorityRepository);
+        roleService = new RoleService(authorityRepository);
     }
 
     private User saveUserTeste() {
-        Authority authority = authorityService.save(new Authority(null, "TESTE"));
+        Authority authority = roleService.save(new Authority(null, "TESTE"));
         return service.save(new User(null, "USUÁRIO TESTE", bCryptPasswordEncoder().encode("SENHA TESTE"), "EMAIL TESTE", Status.ATIVO, new ArrayList<>(List.of(authority))));
     }
 

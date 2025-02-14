@@ -1,5 +1,5 @@
 api:
-  key: ${CORE_API_KEY}
+  key: ${TEMPLATE_CORE_API_KEY}
 
 eureka:
   client:

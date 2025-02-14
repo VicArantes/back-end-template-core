@@ -37,7 +37,8 @@ public class GrupoAcesso {
     /**
      * Lista de acessos do grupo de acesso.
      */
-    @OneToMany(fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Acesso.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     @NotEmpty
     private List<Acesso> acessos;
 

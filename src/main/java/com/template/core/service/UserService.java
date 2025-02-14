@@ -1,6 +1,10 @@
 package com.template.core.service;
 
+import com.template.core.entity.DadosPessoais;
+import com.template.core.entity.Role;
 import com.template.core.entity.User;
+import com.template.core.repository.DadosPessoaisRepository;
+import com.template.core.repository.RoleRepository;
 import com.template.core.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * Serviço para manipulação de users.
@@ -22,7 +26,8 @@ import java.util.List;
 @Transactional
 public class UserService {
     private final UserRepository repository;
-    private final AuthorityRepository authorityRepository;
+    private final RoleRepository roleRepository;
+    private final DadosPessoaisRepository dadosPessoaisRepository;
 
     /**
      * Senha padrão do admin.
@@ -100,7 +105,9 @@ public class UserService {
      */
     public void addAdmin() {
         if (repository.count() == 0) {
-            repository.save(new User(null, "admin", bCryptPasswordEncoder().encode(adminPassword), "admin@admin.com", Status.ATIVO, new ArrayList<>(List.of(authorityRepository.findByAuthorityName("ADMIN")))));
+            DadosPessoais dadosPessoais = dadosPessoaisRepository.findByCpfCnpj("00000000000").orElseThrow(() -> new RuntimeException("Dados pessoais do ADMIN não encontrados"));
+            Role roleAdmin = roleRepository.findByNome("ADMIN").orElseThrow(() -> new RuntimeException("Role ADMIN não encontrada"));
+            repository.save(new User(null, "admin", bCryptPasswordEncoder().encode(adminPassword), "admin@admin.com", true, LocalDate.now(), true, dadosPessoais, Set.of(roleAdmin)));
         }
     }
 

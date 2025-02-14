@@ -1,7 +1,8 @@
 package com.template.core.controller;
 
 import com.template.core.dto.PageRequestDTO;
-import com.template.core.service.AuthorityService;
+import com.template.core.entity.Role;
+import com.template.core.service.RoleService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,63 +12,63 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controlador para lidar com as solicitações relacionadas a authorities.
+ * Controlador para lidar com as solicitações relacionadas a roles.
  */
 @RequestMapping("/api/authority")
 @RequiredArgsConstructor
 @RestController
 @SecurityRequirement(name = "bearer-key")
-public class AuthorityController {
-    private final AuthorityService service;
+public class RoleController {
+    private final RoleService service;
 
     /**
-     * Obtém uma authority pelo seu ID.
+     * Obtém uma role pelo seu ID.
      *
-     * @param id O ID da authority a ser encontrada.
-     * @return A authority correspondente ao ID fornecido.
+     * @param id O ID da role a ser encontrada.
+     * @return A role correspondente ao ID fornecido.
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<Authority> findById(@PathVariable Long id) {
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Role> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     /**
-     * Obtém uma página de authorities.
+     * Obtém uma página de roles.
      *
      * @param pageRequestDTO Objeto contendo as especificações de paginação
-     * @return Uma página de authorities.
+     * @return Uma página de roles.
      */
     @PostMapping("/find")
-    public ResponseEntity<Page<Authority>> findAll(@Valid @RequestBody PageRequestDTO pageRequestDTO) {
+    public ResponseEntity<Page<Role>> findAll(@Valid @RequestBody PageRequestDTO pageRequestDTO) {
         return ResponseEntity.ok(service.findAll(PageRequest.of(pageRequestDTO.page(), pageRequestDTO.size())));
     }
 
     /**
-     * Salva uma authority.
+     * Salva uma role.
      *
-     * @param authority authority a ser salva.
-     * @return authority salva.
+     * @param role role a ser salva.
+     * @return role salva.
      */
     @PostMapping("/save")
-    public ResponseEntity<Authority> save(@Valid @RequestBody Authority authority) {
-        return ResponseEntity.ok(service.save(authority));
+    public ResponseEntity<Role> save(@Valid @RequestBody Role role) {
+        return ResponseEntity.ok(service.save(role));
     }
 
     /**
-     * Atualiza uma authority.
+     * Atualiza uma role.
      *
-     * @param authority authority a ser atualizada.
-     * @return authority atualizada.
+     * @param role role a ser atualizada.
+     * @return role atualizada.
      */
     @PutMapping("/update")
-    public ResponseEntity<Authority> update(@Valid @RequestBody Authority authority) {
-        return ResponseEntity.ok(service.update(authority));
+    public ResponseEntity<Role> update(@Valid @RequestBody Role role) {
+        return ResponseEntity.ok(service.update(role));
     }
 
     /**
-     * Exclui uma authority pelo seu ID.
+     * Exclui uma role pelo seu ID.
      *
-     * @param id O ID da authority a ser excluído.
+     * @param id O ID da role a ser excluída.
      * @return ResponseEntity<Void> status 204 NO CONTENT.
      */
     @DeleteMapping("/delete/{id}")

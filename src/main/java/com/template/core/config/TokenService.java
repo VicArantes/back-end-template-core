@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 
 /**
- * Serviço responsável por gerar, validar e extrair informações do usuário de um JSON WebToken (JWT).
+ * Serviço responsável por gerar, validar e extrair informações do usuário de um JSON Web Token (JWT).
  */
 @Service
 public class TokenService {
