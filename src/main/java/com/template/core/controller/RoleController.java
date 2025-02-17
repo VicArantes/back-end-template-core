@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controlador para lidar com as solicitações relacionadas a roles.
  */
-@RequestMapping("/api/authority")
+@RequestMapping("/api/roles")
 @RequiredArgsConstructor
 @RestController
 @SecurityRequirement(name = "bearer-key")
