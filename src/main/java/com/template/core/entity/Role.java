@@ -38,7 +38,7 @@ public class Role implements GrantedAuthority {
     /**
      * Lista dos grupos de acesso da role.
      */
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<GrupoAcesso> grupoAcesso;
 
     @Override
