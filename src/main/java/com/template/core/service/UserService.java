@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -88,7 +89,7 @@ public class UserService {
             return repository.save(user);
         }
 
-        throw new EntityNotFoundException("User com ID " + user.getId() + " não encontrado.");
+        throw new EntityNotFoundException(MessageFormat.format("User com ID {0} não encontrado.", user.getId()));
     }
 
     /**

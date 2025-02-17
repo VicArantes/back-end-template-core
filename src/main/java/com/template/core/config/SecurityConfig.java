@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -24,6 +25,13 @@ public class SecurityConfig {
     @Value("${api.key}")
     public String apiKey;
 
+    /**
+     * Valida a chave da API comparando a versão decodificada da chave recebida com a chave esperada.
+     *
+     * @param key A chave da API codificada em Base64 a ser validada.
+     * @return {@code true} se a chave decodificada corresponder à chave esperada, {@code false} caso contrário.
+     * @throws AccessDeniedException Se houver um erro ao decodificar a chave.
+     */
     private boolean validateAPIKey(String key) {
         try {
             String decodedKey = new String(Base64.getDecoder().decode(key.getBytes()));
@@ -43,23 +51,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui.html/**", "/v3/api-docs/**", "/swagger-ui/**")
                         .permitAll()
                         .anyRequest()
-                        .access(((authenticationSupplier, request) -> {
-                            String apiKey = request.getRequest().getHeader("X-Service-Token");
+                        .access(((_, request) -> {
+                            String tempApiKey = request.getRequest().getHeader("X-Service-Token");
 
-                            if (validateAPIKey(apiKey)) {
+                            if (validateAPIKey(tempApiKey)) {
                                 return new AuthorizationDecision(true);
                             }
-                            throw new AccessDeniedException("Access Denied");
+                            throw new AccessDeniedException("ACESSO NEGADO");
                         }))
 
 
                 );
         return http.build();
     }
+
 }

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
+
 /**
  * Serviço para manipulação de produtos.
  */
@@ -67,7 +69,7 @@ public class ProdutoService {
             return repository.save(produto);
         }
 
-        throw new EntityNotFoundException("Produto com ID " + produto.getId() + " não encontrado.");
+        throw new EntityNotFoundException(MessageFormat.format("Produto com ID {0} não encontrado.", produto.getId()));
     }
 
     /**

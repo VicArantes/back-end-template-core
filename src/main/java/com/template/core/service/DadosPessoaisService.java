@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
+
 /**
  * Serviço para manipulação de dados pessoais.
  */
@@ -67,7 +69,7 @@ public class DadosPessoaisService {
             return repository.save(dadosPessoais);
         }
 
-        throw new EntityNotFoundException("Dados pessoais com ID " + dadosPessoais.getId() + " não encontrado.");
+        throw new EntityNotFoundException(MessageFormat.format("Dados pessoais com ID {0} não encontrado.", dadosPessoais.getId()));
     }
 
     /**

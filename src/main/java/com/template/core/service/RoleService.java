@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -79,7 +80,7 @@ public class RoleService {
             return repository.save(role);
         }
 
-        throw new EntityNotFoundException("Role com ID " + role.getId() + " não encontrada.");
+        throw new EntityNotFoundException(MessageFormat.format("Role com ID {0} não encontrada.", role.getId()));
     }
 
     /**
