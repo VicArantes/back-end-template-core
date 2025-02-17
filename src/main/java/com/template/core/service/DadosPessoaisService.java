@@ -18,7 +18,6 @@ import java.text.MessageFormat;
 @Service
 @Transactional
 public class DadosPessoaisService {
-
     private final DadosPessoaisRepository repository;
 
     /**
@@ -60,7 +59,7 @@ public class DadosPessoaisService {
     /**
      * Atualiza os dados pessoais.
      *
-     * @param dadosPessoais o dados pessoais a serem atualizados
+     * @param dadosPessoais os dados pessoais a serem atualizados
      * @return os dados pessoais atualizados
      * @throws EntityNotFoundException se os dados pessoais não forem encontrado
      */
@@ -78,7 +77,7 @@ public class DadosPessoaisService {
      * @param id o ID dos dados pessoais a serem excluídos
      */
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        repository.setInativo(id);
     }
 
     /**
