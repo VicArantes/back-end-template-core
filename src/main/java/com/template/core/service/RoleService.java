@@ -5,7 +5,6 @@ import com.template.core.entity.Permissao;
 import com.template.core.entity.Role;
 import com.template.core.entity.Rota;
 import com.template.core.enums.Acesso;
-import com.template.core.repository.GrupoAcessoRepository;
 import com.template.core.repository.PermissaoRepository;
 import com.template.core.repository.RoleRepository;
 import com.template.core.repository.RotaRepository;
@@ -30,7 +29,6 @@ public class RoleService {
     private final RoleRepository repository;
     private final PermissaoRepository permissaoRepository;
     private final RotaRepository rotaRepository;
-    private final GrupoAcessoRepository grupoAcessoRepository;
 
     /**
      * Busca uma role pelo ID.
@@ -98,13 +96,13 @@ public class RoleService {
     public void addRoleAdmin() {
         if (repository.count() == 0) {
             Set<Permissao> permissoes = Set.of(
-                    permissaoRepository.save(new Permissao(null, "Listar usuários", "/api/user/find", true)),
-                    permissaoRepository.save(new Permissao(null, "Buscas usuário por ID", "/api/user/get/{id}", true)),
-                    permissaoRepository.save(new Permissao(null, "Salvar usuário", "/api/user/save", true)),
-                    permissaoRepository.save(new Permissao(null, "Atualizar usuário", "/api/user/update", true))
+                    permissaoRepository.save(new Permissao(null, "/api/user/find", true)),
+                    permissaoRepository.save(new Permissao(null, "/api/user/get/{id}", true)),
+                    permissaoRepository.save(new Permissao(null, "/api/user/save", true)),
+                    permissaoRepository.save(new Permissao(null, "/api/user/update", true))
             );
 
-            Rota rota = rotaRepository.save(new Rota(null, "Gerencia usuários", "/usuarios", permissoes, true));
+            Rota rota = rotaRepository.save(new Rota(null, "Gerencia usuários", "/dm/usuarios", permissoes, true));
             repository.save(new Role(null, "ADMIN", Set.of(new GrupoAcesso(null, rota, List.of(Acesso.DELETE, Acesso.WRITE, Acesso.UPDATE, Acesso.READ), true)), true));
         }
     }
