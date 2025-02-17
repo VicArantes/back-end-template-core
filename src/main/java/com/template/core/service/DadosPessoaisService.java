@@ -86,7 +86,7 @@ public class DadosPessoaisService {
      */
     public void addDadosPessoaisAdmin() {
         if (repository.count() == 0) {
-            repository.save(new DadosPessoais(null, "NOME DO ADMIN", "00000000000"));
+            repository.save(new DadosPessoais(null, "NOME DO ADMIN", "00000000000", true));
         }
     }
 

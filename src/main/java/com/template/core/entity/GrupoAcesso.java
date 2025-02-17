@@ -42,4 +42,11 @@ public class GrupoAcesso {
     @NotEmpty
     private List<Acesso> acessos;
 
+    /**
+     * Identificador para verificar se o grupo de acesso está ativo.
+     */
+    @Column(name = "bl_ativo")
+    @NotNull
+    private boolean ativo;
+
 }

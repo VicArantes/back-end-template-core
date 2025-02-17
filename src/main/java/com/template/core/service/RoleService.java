@@ -98,16 +98,14 @@ public class RoleService {
     public void addRoleAdmin() {
         if (repository.count() == 0) {
             Set<Permissao> permissoes = Set.of(
-                    permissaoRepository.save(new Permissao(null, "Listar usuários", "/api/user/find")),
-                    permissaoRepository.save(new Permissao(null, "Buscas usuário por ID", "/api/user/get/{id}")),
-                    permissaoRepository.save(new Permissao(null, "Salvar usuário", "/api/user/save")),
-                    permissaoRepository.save(new Permissao(null, "Atualizar usuário", "/api/user/update"))
+                    permissaoRepository.save(new Permissao(null, "Listar usuários", "/api/user/find", true)),
+                    permissaoRepository.save(new Permissao(null, "Buscas usuário por ID", "/api/user/get/{id}", true)),
+                    permissaoRepository.save(new Permissao(null, "Salvar usuário", "/api/user/save", true)),
+                    permissaoRepository.save(new Permissao(null, "Atualizar usuário", "/api/user/update", true))
             );
 
-            Rota rota = rotaRepository.save(new Rota(null, "Gerencia usuários", "/usuarios", permissoes));
-            GrupoAcesso grupoAcesso = grupoAcessoRepository.save(new GrupoAcesso(null, rota, List.of(Acesso.DELETE, Acesso.WRITE, Acesso.UPDATE, Acesso.READ)));
-
-            repository.save(new Role(null, "ADMIN", Set.of(grupoAcesso)));
+            Rota rota = rotaRepository.save(new Rota(null, "Gerencia usuários", "/usuarios", permissoes, true));
+            repository.save(new Role(null, "ADMIN", Set.of(new GrupoAcesso(null, rota, List.of(Acesso.DELETE, Acesso.WRITE, Acesso.UPDATE, Acesso.READ), true)), true));
         }
     }
 

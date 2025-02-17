@@ -2,6 +2,7 @@ package com.template.core.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,12 @@ public class DadosPessoais {
     @Column(name = "tx_cpf_cnpj", unique = true)
     @NotBlank
     private String cpfCnpj;
+
+    /**
+     * Identificador para verificar se os dados pessoais do usuário está ativo.
+     */
+    @Column(name = "bl_ativo")
+    @NotNull
+    private boolean ativo;
 
 }
