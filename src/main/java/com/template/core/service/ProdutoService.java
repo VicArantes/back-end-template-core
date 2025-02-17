@@ -18,7 +18,6 @@ import java.text.MessageFormat;
 @Service
 @Transactional
 public class ProdutoService {
-
     private final ProdutoRepository repository;
 
     /**
@@ -78,6 +77,7 @@ public class ProdutoService {
      * @param id o ID do produto a ser excluído
      */
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        repository.setInativo(id);
     }
+
 }

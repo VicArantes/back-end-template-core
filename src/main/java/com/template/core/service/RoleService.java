@@ -87,7 +87,7 @@ public class RoleService {
      * @param id o ID da role a ser excluída
      */
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        repository.setInativo(id);
     }
 
     /**
@@ -99,7 +99,8 @@ public class RoleService {
                     permissaoRepository.save(new Permissao(null, "/api/user/find", true)),
                     permissaoRepository.save(new Permissao(null, "/api/user/get/{id}", true)),
                     permissaoRepository.save(new Permissao(null, "/api/user/save", true)),
-                    permissaoRepository.save(new Permissao(null, "/api/user/update", true))
+                    permissaoRepository.save(new Permissao(null, "/api/user/update", true)),
+                    permissaoRepository.save(new Permissao(null, "/api/user/delete/{id}", true))
             );
 
             Rota rota = rotaRepository.save(new Rota(null, "Gerencia usuários", "/dm/usuarios", permissoes, true));

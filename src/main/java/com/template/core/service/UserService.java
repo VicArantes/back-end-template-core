@@ -98,7 +98,7 @@ public class UserService {
      * @param id o ID do user a ser excluído
      */
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        repository.setInativo(id);
     }
 
     /**
