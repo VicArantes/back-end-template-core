@@ -6,35 +6,33 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnTransformer;
 
 /**
- * Entidade que representa um produto.
+ * Entidade que representa uma permissão.
  */
 @AllArgsConstructor
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "produtos")
-public class Produto {
+@Table(name = "permissoes")
+public class Permissao {
 
     /**
-     * Identificador único do produto.
+     * Identificador único da permissão.
      */
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
     /**
-     * Descrição do produto.
+     * Endpoint da permissão.
      */
-    @Column(name = "tx_descricao", unique = true)
-    @ColumnTransformer(write = "UPPER(?)")
+    @Column(name = "tx_endpoint", unique = true)
     @NotBlank
-    private String descricao;
+    private String endpoint;
 
     /**
-     * Identificador para verificar se o produto está ativo.
+     * Identificador para verificar se a permissão está ativa.
      */
     @Column(name = "bl_ativo")
     @NotNull

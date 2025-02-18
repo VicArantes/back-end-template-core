@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
+
 /**
  * Serviço para manipulação de produtos.
  */
@@ -16,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ProdutoService {
-
     private final ProdutoRepository repository;
 
     /**
@@ -67,7 +68,7 @@ public class ProdutoService {
             return repository.save(produto);
         }
 
-        throw new EntityNotFoundException("Produto com ID " + produto.getId() + " não encontrado.");
+        throw new EntityNotFoundException(MessageFormat.format("Produto com ID {0} não encontrado.", produto.getId()));
     }
 
     /**
@@ -76,6 +77,7 @@ public class ProdutoService {
      * @param id o ID do produto a ser excluído
      */
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        repository.setInativo(id);
     }
+
 }

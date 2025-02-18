@@ -27,7 +27,7 @@ public class ProdutoController {
      * @param id O ID do produto a ser encontrado.
      * @return O produto correspondente ao ID fornecido.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Produto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }

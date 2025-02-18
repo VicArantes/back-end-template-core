@@ -9,32 +9,39 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnTransformer;
 
 /**
- * Entidade que representa um produto.
+ * Entidade que representa os dados pessoais de um usuário.
  */
 @AllArgsConstructor
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "produtos")
-public class Produto {
+@Table(name = "dados_pessoais")
+public class DadosPessoais {
 
     /**
-     * Identificador único do produto.
+     * Identificador único dos dados pessoais de um usuário.
      */
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
     /**
-     * Descrição do produto.
+     * Nome do usuário.
      */
-    @Column(name = "tx_descricao", unique = true)
+    @Column(name = "tx_nome")
     @ColumnTransformer(write = "UPPER(?)")
     @NotBlank
-    private String descricao;
+    private String nome;
 
     /**
-     * Identificador para verificar se o produto está ativo.
+     * CPF/CNPJ do usuário.
+     */
+    @Column(name = "tx_cpf_cnpj", unique = true)
+    @NotBlank
+    private String cpfCnpj;
+
+    /**
+     * Identificador para verificar se os dados pessoais do usuário está ativo.
      */
     @Column(name = "bl_ativo")
     @NotNull

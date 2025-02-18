@@ -1,25 +1,29 @@
 package com.template.core.repository;
 
-import com.template.core.entity.Produto;
+import com.template.core.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
- * Repository para entidade Produto.
+ * Repository para entidade Role.
  */
-public interface ProdutoRepository extends JpaRepository<Produto, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
+
+    Optional<Role> findByNome(String nome);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE              " +
-            "           Produto p       " +
+            "           Role r          " +
             "       SET                 " +
-            "           p.ativo = false " +
+            "           r.ativo = false " +
             "       WHERE               " +
-            "           p.id = :id      ")
+            "           r.id = :id      ")
     void setInativo(@Param("id") Long id);
 
 }
