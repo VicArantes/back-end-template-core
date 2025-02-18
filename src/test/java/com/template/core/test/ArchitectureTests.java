@@ -1,5 +1,6 @@
 package com.template.core.test;
 
+import com.template.core.TemplateCoreApplication;
 import com.template.core.util.annotation.IgnoreMaxLinesCheck;
 import com.tngtech.archunit.core.domain.*;
 import com.tngtech.archunit.junit.AnalyzeClasses;
@@ -27,7 +28,7 @@ import java.lang.reflect.Method;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
-@AnalyzeClasses(packages = "com.template.core")
+@AnalyzeClasses(packagesOf = TemplateCoreApplication.class)
 public class ArchitectureTests {
 
     public static ArchCondition<JavaClass> satisfyRepositoryHasCorrectEndingName() {
