@@ -87,33 +87,40 @@ public class PermissaoService {
         repository.setInativo(id);
     }
 
+    /**
+     * Salva permissões para os endpoints combinados entre classe e método.
+     *
+     * @param classPaths  Paths da classe do controller.
+     * @param methodPaths Paths do método do controller.
+     */
+    private void savePermissions(String[] classPaths, String[] methodPaths) {
+        for (String classPath : classPaths) {
+            for (String methodPath : methodPaths) {
+                String fullPath = classPath + methodPath;
+                if (!fullPath.startsWith("${springdoc.api-docs.path")) {
+                    Optional<Permissao> permissao = repository.findByEndpoint(fullPath);
+                    if (permissao.isEmpty()) {
+                        repository.save(new Permissao(null, fullPath, true));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Método principal para adicionar permissões extraídas das controllers anotados com @RestController.
+     */
     public void adicionaPermissoes() {
         String[] beanNames = applicationContext.getBeanNamesForAnnotation(RestController.class);
-
         for (String beanName : beanNames) {
-            Object controllerBean = applicationContext.getBean(beanName);
-            Class<?> controllerClass = controllerBean.getClass();
-
+            Class<?> controllerClass = applicationContext.getBean(beanName).getClass();
             RequestMapping classRequestMapping = AnnotatedElementUtils.findMergedAnnotation(controllerClass, RequestMapping.class);
-            String[] classPaths = classRequestMapping != null ? classRequestMapping.value() : new String[]{""};
+            String[] classPaths = (classRequestMapping != null) ? classRequestMapping.value() : new String[]{""};
 
             for (Method method : controllerClass.getDeclaredMethods()) {
                 RequestMapping methodRequestMapping = AnnotatedElementUtils.findMergedAnnotation(method, RequestMapping.class);
-
                 if (methodRequestMapping != null) {
-                    String[] methodPaths = methodRequestMapping.value();
-                    for (String classPath : classPaths) {
-                        for (String methodPath : methodPaths) {
-                            String fullPath = classPath + methodPath;
-
-                            if (!fullPath.startsWith("${springdoc.api-docs.path")) {
-                                Optional<Permissao> permissao = repository.findByEndpoint(fullPath);
-                                if (permissao.isEmpty()) {
-                                    repository.save(new Permissao(null, fullPath, true));
-                                }
-                            }
-                        }
-                    }
+                    this.savePermissions(classPaths, methodRequestMapping.value());
                 }
             }
         }
