@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 /**
  * Repository para entidade DadosPessoais.
  */
+@Repository
 public interface DadosPessoaisRepository extends JpaRepository<DadosPessoais, Long> {
 
     Optional<DadosPessoais> findByCpfCnpj(String cpfCnpj);
