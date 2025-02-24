@@ -187,7 +187,7 @@ public class ArchitectureTests {
             public void check(JavaClass javaClass, ConditionEvents events) {
                 if (isNotTempFiles(javaClass)) {
                     boolean extendsJpaRepository = javaClass.getInterfaces().stream().anyMatch(interfaceType -> interfaceType.toErasure().isAssignableTo(JpaRepository.class));
-                    boolean isAnnotatedWithRepository = javaClass.isAssignableTo(Repository.class);
+                    boolean isAnnotatedWithRepository = javaClass.getAnnotations().stream().anyMatch(annotation -> annotation.getType().getName().equals("org.springframework.stereotype.Repository"));
 
                     if (!javaClass.isInterface() || !extendsJpaRepository || !isAnnotatedWithRepository) {
                         events.add(SimpleConditionEvent.violated(javaClass, "Class: '%s' - should be an interface, extend JpaRepository, and be annotated with @Repository".formatted(javaClass.getSimpleName())));
