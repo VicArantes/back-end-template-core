@@ -6,13 +6,13 @@ import com.template.core.service.DadosPessoaisService;
 import com.template.core.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Arquivo responsável por adicionar dados iniciais cruciais para o funcionamento do projeto.
  */
+@Configuration
 @RequiredArgsConstructor
-@Service
 public class Initializer {
     private final RoleService roleService;
     private final UserService userService;
